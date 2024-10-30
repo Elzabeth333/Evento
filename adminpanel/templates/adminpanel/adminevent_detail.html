@@ -1,0 +1,32 @@
+{% extends 'adminpanel/admin_base.html' %}
+{% block title %}
+Edit Venue
+{% endblock %}
+
+{% block content %}
+<div class="container" style="margin-left: 300px;margin-top: 150px;margin-bottom: 150px;">
+    <h1>{{ event.title }}</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Organizer: {{ event.organizer.first_name }} {{ event.organizer.last_name }}</h3>
+            <p>{{ event.description }}</p>
+            <p><strong>Location:</strong> {{ event.location.name }}</p>
+            <p><strong>Start Date:</strong> {{ event.start_date|date:"M d, Y" }}</p>
+            <p><strong>End Date:</strong> {{ event.end_date|date:"M d, Y" }}</p>
+            <p><strong>Time:</strong> {{ event.time|time:"H:i" }}</p>
+            <p><strong>Ticket Price:</strong> Rs. {{ event.ticket_price }}</p>
+            <p><strong>Seats Available:</strong> {{ event.seats_available }}</p>
+        </div>
+        <div class="col-md-6">
+            {% if event.event_image %}
+                <img src="{{ event.event_image.url }}" alt="{{ event.title }}" class="img-fluid" style="max-width: 100%;">
+            {% else %}
+                <p>No image available</p>
+            {% endif %}
+        </div>
+    </div>
+    <div>
+        <a href="{% url 'book_now' event.id %}" class="btn btn-success">Book Now</a> <!-- Assuming you have a booking URL -->
+    </div>
+</div>
+{% endblock %}

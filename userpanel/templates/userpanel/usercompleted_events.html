@@ -1,0 +1,89 @@
+{% extends 'userpanel/user_base.html' %}
+{% load static %}
+{% block title %}
+User | Completed Events
+{% endblock %}
+
+{% block content %}
+
+<section class="news section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-title">
+                    <h3>Completed <span class="alternate">Events</span></h3>
+                    <p>"A Look Back at the Unforgettable Experiences"</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            {% for event in completed_events %}
+            <div class="col-md-4">
+                <div class="event-post">
+                    <div class="event-image">
+                        {% if event.event_image %}
+                        <img src="{{ event.event_image.url }}" alt="{{ event.title }}" class="img-fluid event-thumbnail" style="height: 200px; object-fit: cover;">
+                        {% else %}
+                        <img src="{% static 'userpanel/images/default-event.jpg' %}" alt="Default Image" class="img-fluid event-thumbnail" style="height: 200px; object-fit: cover;">
+                        {% endif %}
+                    </div>
+                    <div class="event-content">
+                        <h4>{{ event.title }}</h4>
+                        <p>{{ event.description|slice:":150" }}...</p>
+                        <a href="{% url 'completed_event_details' event.id %}" class="btn btn-main-sm">View Details</a>
+                    </div>
+                    <div class="event-meta">
+                        <span><strong>Date:</strong> {{ event.start_date|date:"M d, Y" }} - {{ event.end_date|date:"M d, Y" }}</span><br>
+                        <span><strong>Location:</strong> {{ event.location.name }}</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</section>
+
+<style>
+    .event-post {
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+    }
+
+    .event-thumbnail {
+        width: 100%;
+        border-radius: 10px 10px 0 0;
+    }
+
+    .event-content {
+        padding: 15px 0;
+    }
+
+    .event-meta {
+        font-size: 14px;
+        color: #666;
+        margin-top: 10px;
+    }
+
+    .btn-main-sm {
+        background-color: #FF6600;
+        color: white;
+        padding: 8px 20px;
+        border-radius: 5px;
+        text-transform: uppercase;
+        font-size: 14px;
+        display: inline-block;
+        margin-top: 10px;
+    }
+
+    .btn-main-sm:hover {
+        background-color: #e65c00;
+    }
+
+</style>
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'adminpanel/admin_base.html' %}
+{% block title %}
+Edit Venue
+{% endblock %}
+
+{% block content %}
+<div class="container" style="margin-left: 300px;margin-top: 100px;">
+    <h1>{{ venue.name }}</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Location: {{ venue.location }}</h3>
+            <p><strong>Capacity:</strong> {{ venue.capacity }}</p>
+        </div>
+        <div class="col-md-6">
+            {% if venue.venue_image %}
+                <img src="{{ venue.venue_image.url }}" alt="{{ venue.name }}" class="img-fluid" style="max-width: 100%;">
+            {% else %}
+                <p>No image available</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

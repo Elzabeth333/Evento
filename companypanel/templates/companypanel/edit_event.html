@@ -1,0 +1,30 @@
+{% extends 'companypanel/company_base.html' %}
+{% load static %}
+
+{% block title %}
+Edit Event - {{ event.title }}
+{% endblock %}
+
+{% block content %}
+<div class="container" style="margin-top: 50px;margin-bottom: 100px;">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Edit Event - {{ event.title }}</h3>
+                </div>
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success">Save Changes</button>
+                            <a href="{% url 'completed_events' %}" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

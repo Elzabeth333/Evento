@@ -1,0 +1,13 @@
+{% extends 'userpanel/user_base.html' %}
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;"> <!-- Full viewport height -->
+    <div class="col-md-6 col-lg-4"> <!-- Responsive column sizing -->
+        <h1 class="text-center mb-4">Verify OTP</h1> <!-- Centered heading -->
+        <form method="post" class="p-4 border rounded shadow-sm bg-light"> <!-- Added padding, border, and background -->
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary w-100">Verify OTP</button> <!-- Full-width button -->
+        </form>
+    </div>
+</div>
+{% endblock %}

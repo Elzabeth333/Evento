@@ -1,0 +1,26 @@
+{% extends 'adminpanel/admin_base.html' %}
+{% block title %}
+Delete Venue
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-8">
+        <div class="card border-danger" style="background-color: #f8f9fa; border-radius: 5px;">
+            <div class="card-header bg-danger text-white">
+                <h2 class="mb-0">Delete Venue</h2>
+            </div>
+            <div class="card-body">
+                <p>Are you sure you want to delete the venue "{{ venue.name }}"?</p>
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'adminvenue_list' %}" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-danger">DELETE</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

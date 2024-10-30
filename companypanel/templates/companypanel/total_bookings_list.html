@@ -1,0 +1,47 @@
+{% extends 'companypanel/company_base.html' %}
+{% load static %}
+{% block title %}
+Company | Total Bookings
+{% endblock %}
+
+{% block content %}
+
+<div class="container" style="margin-left: 300px; margin-top: 100px;margin-bottom: 100px;">
+    <h1>Total Bookings</h1>
+
+    {% if bookings %}
+        <table style="border-collapse: collapse; width: 100%; margin-top: 20px;">
+            <thead style="background-color:#f39c12;color:#ffffff;">
+                <tr>
+                    <th style="border: 1px solid black; padding: 8px;">Booking Serial</th>
+                    <th style="border: 1px solid black; padding: 8px;">User</th>
+                    <th style="border: 1px solid black; padding: 8px;">Event</th>
+                    <th style="border: 1px solid black; padding: 8px;">Ticket Type</th>
+                    <th style="border: 1px solid black; padding: 8px;">Number of Seats</th>
+                    <th style="border: 1px solid black; padding: 8px;">Total Price</th>
+                    <th style="border: 1px solid black; padding: 8px;">Booking Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in bookings %}
+                    <tr>
+                        <td style="border: 1px solid black; padding: 8px;">{{ booking.booking_serial }}</td>
+                        <td style="border: 1px solid black; padding: 8px;">{{ booking.user.get_full_name }}</td>
+                        <td style="border: 1px solid black; padding: 8px;">{{ booking.event.title }}</td>
+                        <td style="border: 1px solid black; padding: 8px;">{{ booking.ticket_type }}</td>
+                        <td style="border: 1px solid black; padding: 8px;">{{ booking.number_of_seats }}</td>
+                        <td style="border: 1px solid black; padding: 8px;">{{ booking.ticket_price }}</td>
+                        <td style="border: 1px solid black; padding: 8px;">{{ booking.booking_date }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No bookings found.</p>
+    {% endif %}
+
+    <a href="{% url 'event_list' %}" style="margin-top: 20px; display: inline-block;">Back to Events</a>
+    
+</div>
+
+{% endblock %}

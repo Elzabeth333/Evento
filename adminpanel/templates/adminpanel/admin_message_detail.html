@@ -1,0 +1,61 @@
+{% extends 'adminpanel/admin_base.html' %}
+{% load static %}
+{% block title %}
+Message Details
+{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Message Details</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'admin_messages' %}">Messages</a></li>
+                        <li class="breadcrumb-item active">Message Details</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary card-outline">
+                    <div class="card-header">
+                        <h3 class="card-title">Message from {{ message.sender.username }}</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <p><strong>Subject:</strong> {{ message.subject }}</p>
+                        <p><strong>Sent At:</strong> {{ message.created_at|date:"N j, Y, P" }}</p>
+                        <p><strong>Message Body:</strong></p>
+                        <p>{{ message.body }}</p>
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer">
+                        <!-- <a href="{% url 'activate_company' message.sender.id %}" class="btn btn-success">Activate Company Manager</a> -->
+                        <a href="{% url 'admin_mailbox' %}" class="btn btn-secondary">Back to Messages</a>
+                    </div>
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,405 @@
+{% extends 'userpanel/user_base.html' %}
+{% load static %}
+{% block title %}
+User | Home
+{% endblock %}
+
+
+{% block content %}
+<section class="banner bg-banner-one overlay">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<!-- Content Block -->
+				<div class="block">
+					<!-- Coundown Timer -->
+					<div class="timer">{{ form.username }}</div>
+					<h1>Seamless Events,  </h1>
+					<h2>Lasting Impressions.</h2>
+					<h6>12-08 Agust 2024 Cochin</h6>
+					<!-- Action Button -->
+					<a href="{% url 'user_event_list' %}" class="btn btn-white-md">get ticket now</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+	
+<!--====  End of Banner  ====-->
+
+<!--===========================
+=            About            =
+============================-->
+
+<section class="section about">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-4 col-md-6 align-self-center">
+				<div class="image-block bg-about">
+					<img class="img-fluid" src="{% static 'userpanel/images/Liza.jpg' %}" alt="">
+				</div>
+			</div>
+			<div class="col-lg-8 col-md-6 align-self-center">
+				<div class="content-block">
+					<h2>About The <span class="alternate">Evento</span></h2>
+					<div class="description-one">
+						<p>
+							Welcome to Evento, your ultimate event management solution. At Evento, we believe that every event, big or small, deserves meticulous attention and seamless execution. Whether it's a corporate conference, a dazzling wedding, or an intimate gathering, our goal is to bring your vision to life with ease and elegance.
+						</p>
+					</div>
+					<div class="description-two">
+						<p>Founded by Elzabeth Joseph, Evento was born out of a passion for creating memorable experiences. With years of experience in event planning and management, Elzabeth recognized the need for a platform that not only simplifies the process but also adds a personal touch to every event. That's why Evento combines innovative technology with expert knowledge to provide a comprehensive, user-friendly solution for all your event needs.</p>
+					</div>
+					<ul class="list-inline">
+						<li class="list-inline-item">
+							<a href="{% url 'user_event_list' %}" class="btn btn-main-md">Buy ticket</a>
+						</li>
+						<li class="list-inline-item">
+							<a href="{% url 'user_about' %}" class="btn btn-transparent-md">Read more</a>
+						</li>
+					</ul>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</section>
+
+<!--====  End of About  ====-->
+
+<!--==============================
+=            Speakers            =
+===============================-->
+
+<section class="section speakers bg-speaker overlay-lighter">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<!-- Section Title -->
+				<div class="section-title white">
+					<h3>Recent <span class="alternate">Events</span></h3>
+					<p>Effortless Events, Unforgettable Experiences.</p>
+				</div>
+			</div>
+		</div>
+		<div class="row" style="height: 600px;">
+			{% for event in upcoming_events %}
+				<div class="col-lg-3 col-md-4 col-sm-6" >
+					<!-- Event Item -->
+					<div class="speaker-item">
+						<div class="image">
+							{% if event.event_image %}
+								<img src="{{ event.event_image.url }}" alt="Event Image" class="img-fluid" style="height: 200px;">
+							{% else %}
+								<img src="{% static 'userpanel/images/speakers/default-speaker.jpg' %}" alt="Default Image" class="img-fluid">
+							{% endif %}
+							<div class="primary-overlay"></div>
+							<div class="socials">
+								<ul class="list-inline">
+									
+									<li class="list-inline-item">
+										<a href="{% url 'event_details' event.id %}" style="width: 150px;">
+											<i class="book-now" style="color: orangered; font-family: 'Courier New', Courier, monospace;">BOOK_NOW</i>
+										</a>
+									</li>
+								
+								</ul>
+							</div>
+						</div>
+						<div class="content text-center">
+							<h5><a href="{% url 'event_details' event.id %}">{{ event.performer }}</a></h5>
+							<p>{{ event.start_date }}</p>
+							<!-- <p>{{ event.description }}</p> -->
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+		
+	</div>
+	<div class="row mt-4">
+		<div class="col-12 text-center">
+			<a href="{% url 'all_events' %}" class="btn btn-main-md" style="background-color: #FF6600; color: white; padding: 10px 30px; border-radius: 5px; font-size: 16px;">See All Events</a>
+		</div>
+	</div>
+	</div>
+</section>
+
+<!--====  End of Speakers  ====-->
+
+<!--==============================
+=            Schedule            =
+===============================-->
+
+<section class="section schedule">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="schedule-tab">
+                    <ul class="nav nav-pills text-center">
+                        {% for day, events in events_by_day.items %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if forloop.first %}active{% endif %}" href="#day{{ forloop.counter }}" data-toggle="pill">
+                                Day-{{ forloop.counter }}
+                                {% if events %}
+                                    <span>{{ events.0.start_date|date:"d F Y" }}</span>
+                                {% endif %}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="schedule-contents bg-schedule">
+                    <div class="tab-content" id="pills-tabContent">
+                        {% for day, events in events_by_day.items %}
+                            <div class="tab-pane fade {% if forloop.first %}show active{% endif %} schedule-item" id="day{{ forloop.counter }}">
+                                <ul class="m-0 p-0">
+                                    <li class="headings">
+                                        <div class="time">Time</div>
+                                        <div class="speaker">Performer</div>
+                                        <div class="subject">Event Title</div>
+                                        <div class="venue">Venue</div> <!-- Increased width for venue -->
+                                    </li>
+                                    {% for event in events %}
+                                        <li class="schedule-details">
+                                            <div class="block">
+                                                <div class="time">
+                                                    <i class="fa fa-clock-o"></i>
+                                                    <span class="time">{{ event.time|time:"h:i A" }}</span>
+                                                </div>
+                                                <div class="speaker">
+                                                    {% if event.event_image %}
+                                                        <img src="{{ event.event_image.url }}" alt="event-image" class="speaker-thumb">
+                                                    {% else %}
+                                                        <img src="{% static 'userpanel/images/speakers/default-speaker.jpg' %}" alt="event-image" class="speaker-thumb">
+                                                    {% endif %}
+                                                    <span class="name">{{ event.performer }}</span>
+                                                </div>
+                                                <div class="subject">{{ event.title }}</div>
+                                                <div class="venue">{{ event.location.name }}</div> <!-- Venue with more space -->
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!--====  End of Schedule  ====-->
+
+
+
+<!--===========================================
+=            Call to Action Ticket            =
+============================================-->
+
+<section class="cta-ticket bg-ticket overlay-dark">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8">
+				<!-- Get ticket info -->
+				<div class="content-block">
+					<h2>Get Ticket <span class="alternate">Now!</span></h2>
+					<p>Effortless Events, Unforgettable Experiences.</p>
+					<a href="{% url 'user_event_list' %}" class="btn btn-main-md">Buy ticket</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="image-block"><img src="{% static 'userpanel/images/speakers/speaker-ticket.png' %}" alt="" class="img-fluid"></div>
+</section>
+
+<!--====  End of Call to Action Ticket  ====-->
+
+
+
+<!--================================
+=            News Posts            =
+=================================-->
+
+<section class="news section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-title">
+                    <h3>Evento <span class="alternate">Blogs</span></h3>
+                    <p>"A Day to Remember: Reliving the Best Moments from Our Event"</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            {% for blog in blogs %}
+            <div class="col-md-4">
+                <div class="blog-post">
+                    <div class="blog-image">
+                        {% if blog.image %}
+                        <img src="{{ blog.image.url }}" alt="{{ blog.title }}" class="img-fluid blog-thumbnail">
+                        {% endif %}
+                    </div>
+                    <div class="blog-content">
+                        <h4>{{ blog.title }}</h4>
+                        <p>{{ blog.content|slice:":150" }}...</p>
+                        <a href="{% url 'blog_detail' blog.id %}" class="btn btn-main-sm">Read More</a>
+                    </div>
+                    <div class="blog-meta">
+                        <span>By {{ blog.author }}</span>
+                        <span>{{ blog.created_at|date:"M d, Y" }}</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- See More Button -->
+        <div class="row">
+            <div class="col-12 text-right"> <!-- Aligns the button to the right -->
+                <a href="{% url 'blog_list' %}" class="btn btn-main-lg">See More Blogs</a>
+            </div>
+        </div>
+    </div>
+
+    <a href="{% url 'add_blog' %}" class="primary-overlay" style="background-color:blueviolet; color: white; padding: 10px 30px; border-radius: 5px; font-size: 16px; float: right; margin-top: 20px;">Add Blog</a> <!-- Add Blog link -->
+</section>
+
+<!--====  End of News Posts  ====-->
+
+<!--==============================================
+=            Call to Action Subscribe            =
+===============================================-->
+
+
+
+<style>
+    /* Increase container width */
+    .container {
+        max-width: 100%; /* Full width container */
+        padding: 0 30px; /* Add some padding to prevent text from hitting the edges */
+    }
+
+    /* Styling the headings */
+    .headings {
+        background-color: #FF6600; /* Orange background */
+        color: white;
+        font-weight: bold;
+        text-align: center;
+        padding: 5px 0;
+        display: flex; /* Make it flexbox */
+        justify-content: space-between; /* Distribute evenly */
+    }
+
+    .headings div {
+        width: 7%; /* Reduce width for other headings */
+        text-align: center;
+    }
+
+    /* Further increase venue width using a higher flex-grow */
+    .headings .venue {
+        flex-grow: 6; /* Increase the growth factor for the venue column */
+        text-align: center;
+    }
+
+    .schedule-details .block {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #ddd;
+        padding: 5px 0;
+    }
+
+    .schedule-details .block .time,
+    .schedule-details .block .subject,
+    .schedule-details .block .speaker {
+        width: 7%; /* Further reduce fixed width for other columns */
+        text-align: center;
+    }
+
+    .schedule-details .block .venue {
+        flex-grow: 6; /* Give much more space to the venue column */
+        text-align: center;
+    }
+
+    .schedule-details .block .speaker img {
+        width: 100px; /* Fix image size */
+        height: 100px;
+        object-fit: cover;
+        border-radius: 50%; /* Make it circular */
+    }
+
+    .schedule-details .block img {
+        display: block;
+        margin: 0 auto;
+    }
+	.blog-thumbnail {
+    width: 100%; /* Full width of the container */
+    height: 200px; /* Fixed height */
+    object-fit: cover; /* Maintain aspect ratio and cover the area */
+    margin-bottom: 20px; /* Add some spacing below the image */
+}
+
+.blog-post {
+    background-color: white;
+    padding: 15px;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.blog-content {
+    padding: 10px;
+}
+
+.blog-meta {
+    font-size: 12px;
+    color: #888;
+    margin-top: 10px;
+}
+
+.section-title h3 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.section-title p {
+    font-size: 16px;
+    color: #666;
+}
+
+.btn-main-sm {
+    background-color: #FF6600;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.btn-main-sm:hover {
+    background-color: #e65c00;
+}
+
+.primary-overlay {
+    display: inline-block;
+    text-align: center;
+    margin-top: 20px;
+}
+
+</style>
+
+
+
+
+
+
+<!-- Bootstrap JavaScript -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+{% endblock %}

@@ -1,0 +1,379 @@
+{% extends 'sitevisitor/base.html' %}
+{% load static %}
+{% block title %}
+Sitevisitor | Home
+{% endblock %}
+
+{% block content %}
+
+<style>
+/* General Styles */
+body {
+    background: linear-gradient(-45deg, #F5F5F5, #E5E5E5); /* Soft greys for a light and neutral background */
+    background-size: 400% 400%;
+    animation: gradientAnimation 15s ease infinite;
+    color: #2C3E50; /* Dark slate grey for text */
+}
+
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Carousel Styling */
+.carousel-item {
+    position: relative;
+}
+
+.event-flex-container .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(44, 62, 80, 0.4); /* Dark slate grey overlay */
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.carousel-item.active .overlay {
+    opacity: 1;
+}
+
+.carousel-inner {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.carousel-item img {
+    filter: brightness(85%);
+    transition: filter 0.5s ease;
+}
+
+.carousel-item img:hover {
+    filter: brightness(100%);
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: rgba(44, 62, 80, 0.4); /* Dark slate grey icons */
+    padding: 10px;
+    border-radius: 50%;
+}
+
+.carousel-item.fade {
+    transition: opacity 1.5s ease-in-out;
+    opacity: 0;
+}
+
+.carousel-item.fade.active {
+    opacity: 1;
+}
+
+/* Event Details Styling */
+.event-details h5 {
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #2C3E50; /* Dark slate grey for headings */
+    margin-bottom: 15px;
+}
+
+.event-details p {
+    font-size: 1.1rem;
+    color: #4A90E2; /* Muted blue for text highlights */
+    margin-bottom: 10px;
+}
+
+.event-details a.btn {
+    font-size: 1rem;
+    padding: 10px 20px;
+    background-color: #4A90E2; /* Muted blue for buttons */
+    border-radius: 5px;
+    color: #fff;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.event-details a.btn:hover {
+    background-color: #417AB3; /* Slightly darker blue for hover effect */
+    transform: scale(1.05);
+}
+
+.event-images img {
+    border-radius: 10px;
+    transition: transform 0.5s ease;
+}
+
+.event-images:hover img {
+    transform: scale(1.05);
+}
+
+/* Carousel Indicators */
+.carousel-indicators li {
+    background-color: #ccc;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.carousel-indicators .active {
+    background-color: #50C878; /* Soft green active indicator */
+}
+
+/* Team Section Styling */
+.team-area {
+    background-color: #F5F5F5; /* Light grey background */
+    padding: 80px 0;
+}
+
+.single-team {
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+}
+
+.single-team:hover {
+    transform: translateY(-5px); /* Slight upward hover effect */
+}
+
+.team-img img {
+    width: 100%;
+    border-bottom: 5px solid #4A90E2; /* Muted blue bottom border */
+    border-radius: 10px 10px 0 0;
+}
+
+.team-caption {
+    text-align: center;
+    padding: 20px;
+}
+
+.team-caption h3 {
+    font-size: 22px;
+    font-weight: bold;
+    color: #2C3E50;
+    margin-bottom: 10px;
+}
+
+.team-caption p {
+    background-color: #4A90E2;
+    padding: 10px;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+/* Blog Section Styling */
+.home-blog-area {
+    padding: 80px 0;
+    background-color: #F5F5F5; /* Light grey background */
+}
+
+.home-blog-single {
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.home-blog-single:hover {
+    transform: translateY(-5px);
+}
+
+.blog-img img {
+    border-bottom: 5px solid #50C878; /* Soft green border for images */
+    border-radius: 10px;
+}
+
+.blog-cap {
+    padding: 20px;
+    text-align: center;
+}
+
+.blog-cap h3 {
+    font-size: 1.8em;
+    color: #2C3E50;
+    margin-bottom: 10px;
+}
+
+.blog-cap a {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #50C878; /* Soft green for buttons */
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.blog-cap a:hover {
+    background-color: #3DA160; /* Slightly darker green for hover effect */
+    transform: scale(1.05);
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .event-details h5 {
+        font-size: 1.8rem;
+    }
+
+    .carousel-item img {
+        height: 300px;
+    }
+
+    .team-caption h3, .blog-cap h3 {
+        font-size: 1.5em;
+    }
+
+    .home-blog-single {
+        margin-bottom: 20px;
+    }
+}
+
+/* Dynamic Heading Styling */
+.dynamic-heading {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(90deg, #4A90E2 0%, #50C878 100%); /* Gradient from blue to green */
+    padding: 10px 20px;
+    border-radius: 10px;
+    display: inline-block;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover Effect for Heading */
+.dynamic-heading:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+</style>
+
+<!-- Carousel Section -->
+<div class="container">
+    <div id="eventCarousel" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            {% for event in latest_events %}
+            <li data-target="#eventCarousel" data-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}"></li>
+            {% endfor %}
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+            {% for event in latest_events %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %} fade">
+                <!-- Flex Container for Content and Images -->
+                <div class="event-flex-container position-relative" style="height: 500px;">
+                    <!-- Overlay with text and CTA -->
+                    <div class="overlay d-flex align-items-center justify-content-center flex-column text-center">
+                        <div class="event-details">
+                            <h5>{{ event.title }}</h5>
+                            <p>{{ event.description|truncatewords:20 }}</p>
+                            <p><strong>When:</strong> {{ event.start_date|date:"M d, Y" }} at {{ event.time|date:"H:i" }}</p>
+                            <p><strong>Where:</strong> {{ event.location.name }}, {{ event.location.location }}</p>
+                            <a href="{% url 'attendee_login' %}" class="btn mt-3">Book Now</a>
+                        </div>
+                    </div>
+                    <!-- Event Image -->
+                    <div class="event-images w-100 h-100">
+                        <img src="{{ event.event_image.url }}" alt="{{ event.title }}" class="img-fluid w-100 h-100" style="object-fit: cover;">
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Left and right controls -->
+        <a class="carousel-control-prev" href="#eventCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#eventCarousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div>
+
+<!-- Team Section -->
+<section class="team-area">
+    <div class="container">
+        <h3 class="dynamic-heading">Managers</h3>
+        <div class="row justify-content-center">
+            {% for company in companies %}
+            <div class="col-lg-4 col-md-6">
+                <div class="single-team">
+                    <div class="team-img">
+                        <img src="{{ company.profile_image.url }}" alt="Profile image of {{ company.user.username }}" style="height: 250px;">
+                    </div>
+                    <div class="team-caption">
+                        <h3>{{ company.user.username | upper }}</h3>
+                        <p>Phone: {{ company.phone_number }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Blog Section -->
+<section class="home-blog-area section-padding30">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-8">
+                <div class="section-tittle text-center mb-50">
+                    <h2>Evento From Blog</h2>
+                    <p>"A Day to Remember: Reliving the Best Moments from Our Event"</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            {% for blog in blogs %}
+            <div class="col-xl-6 col-lg-6 col-md-6">
+                <div class="home-blog-single mb-30">
+                    <div class="blog-img-cap">
+                        <div class="blog-img">
+                            {% if blog.image %}
+                            <img src="{{ blog.image.url }}" alt="{{ blog.title }}" class="img-fluid blog-thumbnail" style="height: 300px;">
+                            {% endif %}
+                            <!-- Blog date -->
+                            <div class="blog-date text-center">
+                                <span>By {{ blog.author }}</span>
+                                <span>{{ blog.created_at|date:"M d, Y" }}</span>
+                            </div>
+                        </div>
+                        <div class="blog-cap">
+                            <p>{{ blog.title }}</p>
+                            <h3>{{ blog.content|slice:":150" }}...</h3>
+                            <a href="{% url 'attendee_login' %}" class="more-btn">Read more »</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <a href="{% url 'attendee_login' %}" class="btn btn-primary">See all blogs</a>
+    </div>
+</section>
+
+{% endblock %}

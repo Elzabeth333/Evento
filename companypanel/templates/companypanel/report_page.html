@@ -1,0 +1,65 @@
+{% extends 'companypanel/company_base.html' %}
+{% load static %}
+{% block title %}
+Company | Report
+{% endblock %}
+
+{% block content %}
+<div class="container" style="margin-left: 300px;margin-top: 50px;">
+    <div class="row">
+        <div class="col-12">
+            <div class="card" style="margin-top: 30px;">
+                <div class="card-header">
+                    <h3 class="card-title">Event Report</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <!-- Total Events -->
+                        <div class="col-md-6" >
+                            <div class="card">
+                                <div class="card-body" style="background-color:#f39c12;color:#ffffff;">
+                                    <h5>Total Events Added</h5>
+                                    <p>{{ total_events }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Total Tickets Booked -->
+                        <div class="col-md-6" >
+                            <div class="card">
+                                <div class="card-body" style="background-color:#27ae60;;color:#ffffff;">
+                                    <h5>Total Tickets Booked</h5>
+                                    <p>{{ total_tickets_booked }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- Total Amount Received -->
+                        <div class="col-md-6" >
+                            <div class="card">
+                                <div class="card-body" style="background-color:#e74c3c;color:#ffffff;">
+                                    <h5>Total Amount Received</h5>
+                                    <p>₹ {{ total_amount_received }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Top Event by Tickets Booked -->
+                        <div class="col-md-6" >
+                            <div class="card">
+                                <div class="card-body" style="background-color:#3498db;color:#ffffff;">
+                                    <h5>Top Event (Most Tickets Booked)</h5>
+                                    {% if top_event %}
+                                        <p>{{ top_event.event__title }} - {{ top_event.total_tickets }} Tickets Booked</p>
+                                    {% else %}
+                                        <p>No tickets booked yet.</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

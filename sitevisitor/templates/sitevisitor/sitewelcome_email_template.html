@@ -1,0 +1,123 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evento</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .email-header {
+            text-align: center;
+            color: #4CAF50;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .email-body {
+            text-align: center;
+            color: #333333;
+            padding: 20px;
+        }
+
+        .email-body p {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .welcome-message {
+            color: #4CAF50;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .action-button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 20px 0;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .email-footer {
+            text-align: center;
+            color: #777777;
+            font-size: 12px;
+            padding-top: 20px;
+            border-top: 1px solid #dddddd;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo img {
+            width: 80px;
+            height: 80px;
+        }
+    </style>
+</head>
+
+<body>
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+            <td align="center" bgcolor="#f7f7f7">
+                <table border="0" cellpadding="0" cellspacing="0" width="600" class="email-container">
+                    <!-- Logo Section -->
+                    <tr>
+                        <td align="center" class="logo">
+                            <img src="#" alt="Event Logo">
+                        </td>
+                    </tr>
+
+                    <!-- Email Header -->
+                    <tr>
+                        <td align="center" class="email-header">
+                            Welcome to Evento!
+                        </td>
+                    </tr>
+
+                    <!-- Email Body -->
+                    <tr>
+                        <td align="center" class="email-body">
+                            <p>Hello {{ name }},</p>
+                            <p>Thank you for registering with Blog-Hub. We're thrilled to have you on board!</p>
+                            <p class="welcome-message">Start exploring the platform and enjoy our services!</p>
+                            <a href="{% url 'user_login' %}" class="action-button">Get Started</a>
+                        </td>
+                    </tr>
+
+                    <!-- Footer Section -->
+                    <tr>
+                        <td align="center" class="email-footer">
+                            <p>&copy; {{ current_year }} Evento. All rights reserved.</p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

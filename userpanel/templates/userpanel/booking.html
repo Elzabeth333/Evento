@@ -1,0 +1,31 @@
+{% extends 'userpanel/user_base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container" style="margin-left: 300px; margin-top: 100px; margin-bottom: 200px;">
+    <!-- Display messages -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- Display available seats -->
+    <h2>Available Seats: {{ available_seats }}</h2>
+
+    <!-- Form for bank details -->
+    <div class="row" style="margin-top: 20px;">
+        <h1>Enter Your Bank Details to Book Tickets for {{ event.title }}</h1>
+        <form method="post" id="booking-form">
+            {% csrf_token %}
+            {{ form.as_p }} <!-- Render the form fields with paragraph elements -->
+            <a href="{% url 'userpanel:request_otp' %}">
+            <button type="submit" class="btn btn-primary">Proceed</button>
+        </a>
+        </form>
+    </div>
+</div>
+{% endblock %}

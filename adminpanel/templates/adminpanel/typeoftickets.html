@@ -1,0 +1,41 @@
+{% extends 'adminpanel/admin_base.html' %}
+{% load static %}
+
+{% block title %}
+Admin | Ticket Types
+{% endblock %}
+
+{% block content %}
+<div class="container" style="display: flex; flex-direction: column; align-items: center; margin-top: 20px;">
+    
+    <div class="row" style="width: 100%; max-width: 600px; margin-bottom: 20px;">
+        <h1>Add New Ticket Type</h1>
+        <form method="post" style="width: 100%;">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Add Ticket Type</button>
+        </form>
+    </div>
+    
+    <div class="row" style="width: 100%; max-width: 800px;margin-bottom: 50px;">
+        <h1>Sent Ticket Types</h1>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ticket in sent_tickets %}
+                <tr>
+                    <td>{{ ticket.name }}</td>
+                    <td>{{ ticket.description }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+{% endblock %}

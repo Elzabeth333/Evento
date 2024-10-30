@@ -1,0 +1,56 @@
+{% extends 'companypanel/company_base.html' %}
+{% load static %}
+
+{% block title %}
+Company | Ticket Type List
+{% endblock %}
+
+{% block content %}
+<div class="row" style="margin-top: 50px;margin-left: 250px;">
+    <div class="col-12">
+        
+       <!-- Display total counts for each ticket type -->
+<div class="card mt-4" style="margin: 30px;">
+    <div class="card-header">
+        <h3 class="card-title">Total Tickets</h3>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered">
+            <tr>
+                <td style="background-color: #f39c12;">
+                    <p><strong>Total Starter Tickets:</strong><b>{{ total_starter }}</b> </p>
+                </td>
+                <td style="background-color: #00a65a;">
+                    <p><strong>Total Standard Tickets:</strong><b>{{ total_standard }}</b></p>
+                </td>
+                <td style="background-color: #00c0ef;">
+                    <p><strong>Total Platinum Tickets:</strong><b>{{ total_platinum }}</b></p>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="container mt-4">
+    <h2>Booked Tickets Summary</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Event Title</th>
+                <th>Total Booked Tickets</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in events_with_ticket_count %}
+                <tr>
+                    <td>{{ event.title }}</td>
+                    <td>{{ event.total_tickets|default:0 }}</td> <!-- Show 0 if no tickets booked -->
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+    </div>
+</div>
+{% endblock %}

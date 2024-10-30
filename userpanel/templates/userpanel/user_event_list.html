@@ -1,0 +1,57 @@
+{% extends 'userpanel/user_base.html' %}
+{% load static %}
+{% block title %}
+User | Home
+{% endblock %}
+
+{% block content %}
+<section class="section schedule">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="schedule-contents bg-schedule">
+                        <div class="tab-pane fade show active schedule-item" style="width: 1250px;">
+                            <ul class="m-0 p-0">
+                                <li class="headings">
+                                    <div class="time" style="width: 200px;">Time</div>
+                                    <div class="speaker" style="width: 350px;">Event image</div>
+                                    <div class="subject" style="width: 350px;">when</div>
+                                    <div class="venue"  style="width: 250px;">Venue</div>
+                                </li>
+                                
+                                {% for event in upcoming_events %}
+                                <li class="schedule-details">
+                                    <div class="block">
+                                        <div class="time" style="width: 200px;">
+                                            <i class="fa fa-clock-o"></i>
+                                            <span class="time" >{{ event.time|time:"h:i A" }}</span>
+                                        </div>
+                                        <div class="speaker" style="width: 350px;">
+                                            <a href="{% url 'event_details' event.id %}">
+                                            {% if event.event_image %}
+                                            <img src="{{ event.event_image.url }}" alt="speaker-thumb" style="width: 50px;">
+                                            {% else %}
+                                            <img src="{% static 'userpanel/images/speakers/default-speaker.jpg' %}"
+                                                alt="speaker-thumb">
+                                            {% endif %}
+                                            <span class="name"  style="width: 350px;">{{ event.title }}</span>
+                                        </a>
+                                        </div>
+                                        <div class="subject"  style="width: 200px;">{{ event.start_date }}</div>
+                                        <div class="venue" style="width: 350px;">{{ event.location }}</div>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                         
+                            </ul>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+                

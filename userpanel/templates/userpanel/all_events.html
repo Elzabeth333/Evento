@@ -1,0 +1,65 @@
+{% extends 'userpanel/user_base.html' %}
+
+{% block title %}
+All Events
+{% endblock %}
+
+{% block content %}
+
+<section class="section all-events" style="padding: 60px 0;">
+    <div class="container">
+        <h2 class="text-center">All <span class="alternate" style="color: #FF6600;">Events</span></h2>
+
+        <div class="row">
+            {% for event in page_obj %}
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="event-item">
+                        <div class="image">
+                            {% if event.event_image %}
+                                <!-- Wrap image in a link to event details -->
+                                <a href="{% url 'event_details' event.id %}">
+                                    <img src="{{ event.event_image.url }}" alt="{{ event.title }}" class="img-fluid" style="height: 200px;">
+                                </a>
+                            {% endif %}
+                        </div>
+                        <div class="content text-center">
+                            <h5><a href="{% url 'event_details' event.id %}">{{ event.performer }}</a></h5>
+                            <p>{{ event.start_date }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination Links -->
+        <div class="row mt-4">
+            <div class="col-12 text-center">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% for num in page_obj.paginator.page_range %}
+                        <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                        </li>
+                        {% endfor %}
+                        {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

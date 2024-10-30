@@ -1,0 +1,94 @@
+{% extends 'userpanel/user_base.html' %}
+
+{% block title %}
+{{ blog.title }}
+{% endblock %}
+
+{% block content %}
+<section class="section about">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 align-self-center">
+                <div class="image-block bg-about">
+                    {% if blog.image %}
+                        <img class="img-fluid" src="{{ blog.image.url }}" alt="{{ blog.title }}">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-6 align-self-center">
+                <div class="content-block">
+                    <h2>{{ blog.title }}</h2>
+                    <div class="description-one">
+                        <p>{{ blog.content }}</p>
+                    </div>
+                    <div class="blog-meta">
+                        
+                        <p><strong>Author:</strong> {{ blog.author }}</p>
+                        <p><strong>Posted on:</strong> {{ blog.created_at|date:"F d, Y" }}</p>
+                        <p><strong>Last updated:</strong> {{ blog.updated_at|date:"F d, Y" }}</p>
+                    </div>
+                    <div class="description-two">
+                        {% if blog.author == request.user %}
+                            <!-- Edit and Delete buttons only for the author -->
+                            <a href="{% url 'blog_edit' blog.id %}" class="btn btn-main-md" style="background-color: #FF6600; color: white;">Edit Blog</a>
+                            <a href="{% url 'blog_delete' blog.id %}" class="btn btn-danger" style="color: white;">Delete Blog</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<style>
+    .btn-main-md {
+    background-color: #FF6600;
+    color: white;
+    padding: 10px 30px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-size: 16px;
+    text-align: center;
+    display: inline-block;
+    margin-top: 15px;
+}
+
+.btn-main-md:hover {
+    background-color: #e65c00;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+    padding: 10px 30px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-size: 16px;
+    text-align: center;
+    display: inline-block;
+    margin-top: 15px;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    padding: 10px 30px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-size: 16px;
+    text-align: center;
+    display: inline-block;
+    margin-top: 15px;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+</style>
+{% endblock %}

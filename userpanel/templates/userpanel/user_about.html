@@ -1,0 +1,49 @@
+{% extends 'userpanel/user_base.html' %}
+{% load static %}
+{% block title %}
+User | Home
+{% endblock %}
+
+{% block content %}
+
+<section class="section about">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-4 col-md-6 align-self-center">
+				<div class="image-block bg-about">
+					<img class="img-fluid" src="{% static 'userpanel/images/Liza.jpg' %}" alt="">
+				</div>
+			</div>
+			<div class="col-lg-8 col-md-6 align-self-center">
+				<div class="content-block">
+					<h2>About The <span class="alternate">Evento</span></h2>
+					<div class="description-one">
+						<p>
+							Why Choose <b>Evento?</b><br><br>
+
+<b>Tailored Solutions:</b> At Evento, we understand that every event is unique. Our platform allows you to customize every aspect of your event, from the initial planning stages to the final execution.<br><br>
+
+<b>Expert Team:</b> Led by Elzabeth Joseph, our team of dedicated professionals is committed to delivering excellence. We work closely with our clients to understand their needs and exceed their expectations.<br><br>
+
+<b>Innovative Technology:</b> We leverage the latest technology to streamline the event management process, ensuring that everything runs smoothly. From guest lists to vendor coordination, Evento has got you covered.<br><br>
+
+<b>Seamless Experience:</b> We believe that planning an event should be a joyful experience, not a stressful one. That's why we've made our platform intuitive and easy to use, so you can focus on what truly matters—creating unforgettable memories.<br><br>
+
+
+
+
+					</div>
+					<div class="description-two">
+						<p>Join Us
+
+                            At Evento, we’re more than just an event management platform—we're your partners in creating extraordinary moments. Whether you're planning your first event or your fiftieth, we’re here to help make it a success.
+                            
+                            Discover the magic of Evento today and let us turn your dreams into reality.</p>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+{% endblock %}

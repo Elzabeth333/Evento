@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket Cancellation</title>
+</head>
+<body style="font-family: Arial, sans-serif;">
+    <div style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 5px;">
+        <h2 style="color: #dc3545;">Your Ticket for {{ event_title }} Has Been Cancelled</h2>
+        <p>Dear {{ user_name }},</p>
+        <p>We're sorry to inform you that your booking for <strong>{{ event_title }}</strong> has been cancelled. Here are the details:</p>
+
+        <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+                <th style="border-bottom: 1px solid #e0e0e0; padding: 8px; text-align: left;">Booking Serial:</th>
+                <td style="border-bottom: 1px solid #e0e0e0; padding: 8px;">{{ booking.booking_serial }}</td>
+            </tr>
+            <tr>
+                <th style="border-bottom: 1px solid #e0e0e0; padding: 8px; text-align: left;">Event Name:</th>
+                <td style="border-bottom: 1px solid #e0e0e0; padding: 8px;">{{ event_title }}</td>
+            </tr>
+            <tr>
+                <th style="border-bottom: 1px solid #e0e0e0; padding: 8px; text-align: left;">Ticket Type:</th>
+                <td style="border-bottom: 1px solid #e0e0e0; padding: 8px;">{{ ticket_type }}</td>
+            </tr>
+            <tr>
+                <th style="border-bottom: 1px solid #e0e0e0; padding: 8px; text-align: left;">Number of Seats:</th>
+                <td style="border-bottom: 1px solid #e0e0e0; padding: 8px;">{{ number_of_seats }}</td>
+            </tr>
+            <tr>
+                <th style="border-bottom: 1px solid #e0e0e0; padding: 8px; text-align: left;">Total Refund:</th>
+                <td style="border-bottom: 1px solid #e0e0e0; padding: 8px;">${{ total_refund }}</td>
+            </tr>
+        </table>
+
+        <p style="margin-top: 20px;">We hope to see you at future events..</p>
+
+        <p style="margin-top: 20px;">Best Regards,<br><strong>Evento Team</strong></p>
+    </div>
+</body>
+</html>

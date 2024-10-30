@@ -1,0 +1,30 @@
+{% extends 'companypanel/company_base.html' %}
+{% block title %}
+Evento | Delete Event
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Delete Confirmation</h5>
+                <p>Are you sure you want to delete the event "{{ events.title }}"?</p> <!-- Display the event title for context -->
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'event_list' %}" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-danger">DELETE</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-info mt-2">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+{% endblock %}

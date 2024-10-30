@@ -1,0 +1,115 @@
+{% extends 'adminpanel/admin_base.html' %}
+{% load static %}
+{% block title %}
+Admin | Mailbox
+{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Inbox</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Inbox</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content">
+    <div class="row">
+      <div class="col-md-3">
+        <a href="{% url 'admin_compose' %}" class="btn btn-primary btn-block mb-3">Compose</a>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Folders</h3>
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-body p-0">
+            <ul class="nav nav-pills flex-column">
+              <li class="nav-item active">
+                <a href="{% url 'admin_mailbox' %}" class="nav-link">
+                  <i class="fas fa-inbox"></i> Inbox
+                  <span class="badge bg-primary float-right">{{ messages.count }}</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'admin_sent_items' %}" class="nav-link">
+                  <i class="far fa-envelope"></i> Sent
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'admin_deleted_messages' %}" class="nav-link">
+                  <i class="far fa-trash-alt"></i> Trash
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-9">
+        <div class="card card-primary card-outline">
+          <div class="card-header">
+            <h3 class="card-title">Inbox</h3>
+            <div class="card-tools">
+              <form method="get" action="{% url 'admin_mailbox' %}">
+                <div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" name="mailbox_search" class="form-control float-right" placeholder="Search messages">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-default">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            </div>
+          </div>
+          <div class="card-body p-0">
+            <div class="table-responsive mailbox-messages">
+              <table class="table table-hover table-striped">
+                <tbody>
+                  {% for message in messages %}
+                  <tr>
+                    <td class="mailbox-name">{{ message.sender.username }}</td>
+                    <td class="mailbox-subject">{{ message.subject }}</td>
+                    <td class="mailbox-date">{{ message.created_at|date:"N j, Y, P" }}</td>
+                    <td>
+                      <a href="{% url 'admin_message_detail' message.id %}" class="btn btn-sm btn-primary">View</a>
+                      {% if not message.sender.is_active %}
+                      <a href="{% url 'activate_company' message.sender.id %}" class="btn btn-success">Activate </a>
+                      {% endif %}
+                      <form method="POST" action="{% url 'admin_delete_message' message.id %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-danger">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </form>
+                    </td>
+                  </tr>
+                  {% empty %}
+                  <tr>
+                    <td colspan="4">No messages found.</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %}

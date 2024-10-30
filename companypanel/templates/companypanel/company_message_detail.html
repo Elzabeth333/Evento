@@ -1,0 +1,41 @@
+{% extends 'companypanel/company_base.html' %}
+{% load static %}
+
+{% block title %}
+Company | Message Detail
+{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Message Detail</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary card-outline">
+                    <div class="card-header">
+                        <h3 class="card-title">{{ message.subject }}</h3>
+                    </div>
+                    <div class="card-body">
+                        <strong>From:</strong> {{ message.sender.username }}<br>
+                        <strong>Date:</strong> {{ message.created_at }}<br><br>
+                        <p>{{ message.body }}</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{% url 'company_compose_message' %}?reply={{ message.id }}" class="btn btn-primary">Reply</a>
+                        <a href="{% url 'company_inbox' %}" class="btn btn-primary">Back to messages</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

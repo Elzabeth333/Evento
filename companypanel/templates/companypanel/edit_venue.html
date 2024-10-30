@@ -1,0 +1,56 @@
+{% extends 'companypanel/company_base.html' %}
+{% block title %}
+Edit Venue
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5" style="margin-left: 300px; margin-right: 150px; margin-bottom: 150px;">
+    <div class="card border-primary" style="background-color: #f8f9fa; border-radius: 5px;">
+        <div class="card-header bg-primary text-white">
+            <h2 class="mb-0">Edit Venue</h2>
+        </div>
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <!-- Heading Label for Name -->
+                <div class="form-group">
+                    <label for="id_name" class="font-weight-bold text-primary">Name</label>
+                    {{ form.name }}
+                </div>
+                
+                <!-- Heading Label for Location -->
+                <div class="form-group">
+                    <label for="id_location" class="font-weight-bold text-primary">Location</label>
+                    {{ form.location }}
+                </div>
+                
+                <!-- Heading Label for Capacity -->
+                <div class="form-group">
+                    <label for="id_capacity" class="font-weight-bold text-primary">Capacity</label>
+                    {{ form.capacity }}
+                </div>
+                
+                <!-- Heading Label for Venue Image -->
+                <div class="form-group">
+                    <label for="id_venue_image" class="font-weight-bold text-primary">Venue Image</label>
+                    {{ form.venue_image }}
+                </div>
+                
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <a href="{% url 'venue_list' %}" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% if messages %}
+{% for message in messages %}
+<script>
+    alert('{{ message }}')
+</script>
+{% endfor %}
+{% endif %}
+
+{% endblock %}

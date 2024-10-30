@@ -1,0 +1,109 @@
+{% extends 'userpanel/user_base.html' %}
+{% load static %}
+{% block title %}
+User | Blog List
+{% endblock %}
+
+{% block content %}
+
+
+<section class="news section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-title">
+                    <h3>Evento <span class="alternate">Gallery</span></h3>
+                    <p>"A Day to Remember: Reliving the Best Moments from Our Event"</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            {% for blog in blogs %}
+            <div class="col-md-4">
+                <div class="blog-post">
+                    <div class="blog-image">
+                        {% if blog.image %}
+                        <img src="{{ blog.image.url }}" alt="{{ blog.title }}" class="img-fluid blog-thumbnail">
+                        {% endif %}
+                    </div>
+                    <div class="blog-content">
+                        <h4>{{ blog.title }}</h4>
+                        <p>{{ blog.content|slice:":150" }}...</p>
+                        <a href="{% url 'blog_detail' blog.id %}" class="btn btn-main-sm">Read More</a>
+                    </div>
+                    <div class="blog-meta">
+                        <span>By {{ blog.author }}</span>
+                        <span>{{ blog.created_at|date:"M d, Y" }}</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        
+    </div>
+
+    <a href="{% url 'add_blog' %}" class="primary-overlay" style="background-color:blueviolet; color: white; padding: 10px 30px; border-radius: 5px; font-size: 16px; float: right; margin-top: 20px;margin-right: 100px;">Add Blog</a> <!-- Add Blog link -->
+</section>
+
+<style>
+
+.blog-thumbnail {
+    width: 100%; /* Full width of the container */
+    height: 200px; /* Fixed height */
+    object-fit: cover; /* Maintain aspect ratio and cover the area */
+    margin-bottom: 20px; /* Add some spacing below the image */
+}
+
+.blog-post {
+    background-color: white;
+    padding: 15px;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.blog-content {
+    padding: 10px;
+}
+
+.blog-meta {
+    font-size: 12px;
+    color: #888;
+    margin-top: 10px;
+}
+
+.section-title h3 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.section-title p {
+    font-size: 16px;
+    color: #666;
+}
+
+.btn-main-sm {
+    background-color: #FF6600;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.btn-main-sm:hover {
+    background-color: #e65c00;
+}
+
+.primary-overlay {
+    display: inline-block;
+    text-align: center;
+    margin-top: 20px;
+}
+
+
+</style>
+
+{% endblock %}

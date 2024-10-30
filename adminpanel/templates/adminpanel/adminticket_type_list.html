@@ -1,0 +1,68 @@
+{% extends 'adminpanel/admin_base.html' %}
+{% load static %}
+
+{% block title %}
+Company | Ticket Type List
+{% endblock %}
+
+{% block content %}
+<div class="row" style="margin-top: 50px;margin-left: 250px;">
+    <div class="col-12">
+         <!-- Display total counts for each ticket type -->
+<div class="card mt-4" style="margin: 30px;">
+    <div class="card-header">
+        <h3 class="card-title">Total Tickets</h3>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered">
+            <tr>
+                <td style="background-color: #f39c12;">
+                    <p><strong>Total Starter Tickets:</strong><b>{{ total_starter }}</b> </p>
+                </td>
+                <td style="background-color: #00a65a;">
+                    <p><strong>Total Standard Tickets:</strong><b>{{ total_standard }}</b></p>
+                </td>
+                <td style="background-color: #00c0ef;">
+                    <p><strong>Total Platinum Tickets:</strong><b>{{ total_platinum }}</b></p>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+        <div class="card" style="margin: 30px;margin-bottom: 150px;">
+            <div class="card-header">
+                <h3 class="card-title">Ticket Types</h3>
+            </div>
+            <div class="card-body table-responsive p-0" style="height: 420px;">
+                <table class="table table-head-fixed text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>Event</th>
+                            <th>Ticket Type</th>
+                            <th>Number of Seats</th>
+                            <th>Available Seats</th>
+                            <th>Ticket Price</th>
+                            <th>Canceled</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for booking in bookings %}
+                        <tr>
+                            <td>{{ booking.event.title }}</td>
+                            <td>{{ booking.get_ticket_type_display }}</td>
+                            <td>{{ booking.number_of_seats }}</td>
+                            <td>{{ booking.available_seats }}</td>
+                            <td>{{ booking.ticket_price }}</td>
+                            <td>{% if booking.canceled %} Yes {% else %} No {% endif %}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+      
+    </div>
+</div>
+{% endblock %}

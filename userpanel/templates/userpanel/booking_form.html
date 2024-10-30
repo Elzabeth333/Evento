@@ -1,0 +1,184 @@
+{% extends 'userpanel/user_base.html' %}
+{% load custom_filters %}
+{% block content %}
+
+<div style="background-color: #FF6600;">
+    <div class="container" style="margin-top: 100px;background-color: whitesmoke;">
+        <div class="available-seats-form" style="display: flex; justify-content: space-between; align-items: flex-start; width: 100%; max-width: 1200px; gap: 20px;">
+            <div class="seats-available" style="flex: 1; background-color: #f9f9f9; padding: 20px; border-radius: 8px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);margin-top: 50px;">
+                <h4>Available Seats: {{ event.seats_available }}</h4>
+            </div>
+        </div>
+
+        <div class="booking-container" style="display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap;">
+            <!-- Form for entering booking details -->
+            <div class="booking-form" style="flex: 1; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);">
+                <h5>Enter Your Booking Details <br></h5><h6>{{ event.title }}</h6> 
+                <form method="post" style="display: flex; flex-direction: column; gap: 15px;">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+
+                    <!-- Display total price if available -->
+                    <h5>Total Price: &#36;<span id="total-price">{{ total_price|default_if_none:"0.00" }}</span></h5>
+
+                    <button type="submit" class="btn btn-primary" style="background-color: #4a148c;">Proceed</button>
+                </form>
+            </div>
+
+            <!-- Display all booking summaries -->
+            <div class="booking-summary" style="flex: 1; background-color: #f9f9f9; padding: 20px; border-radius: 8px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);">
+                <h5>All Booking Summaries</h5>
+
+                {% if bookings %}
+                    {% for booking in bookings %}
+                        <div class="booking-item" style="margin-bottom: 20px;">
+                            <p><strong>Booking Serial:</strong> {{ details.booking_serial }}</p>
+                            <p><strong>Ticket Type:</strong> {{ booking.ticket_type }}</p>
+                            <p><strong>Number of Seats:</strong> {{ booking.number_of_seats }}</p>
+                            {% if booking.ticket_type == 'starter' %}
+                                <p><strong>Total Price:</strong> &#36;{{ booking.number_of_seats|multiply:event.ticket_price }}</p>
+                            {% elif booking.ticket_type == 'standard' %}
+                                <p><strong>Total Price:</strong> &#36;{{ booking.number_of_seats|multiply:event.ticket_price|multiply:2 }}</p>
+                            {% elif booking.ticket_type == 'platinum' %}
+                                <p><strong>Total Price:</strong> &#36;{{ booking.number_of_seats|multiply:event.ticket_price|multiply:3 }}</p>
+                            {% endif %}
+                            <!-- Cancel Booking Button -->
+                            <form method="post" action="{% url 'cancel_booking' booking.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger" style="padding: 10px 20px; border: none; border-radius: 5px; background-color: #dc3545; color: #fff; cursor: pointer;">
+                                    Cancel Booking
+                                </button>
+                            </form>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No bookings found for this event.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Success message -->
+        {% if success_message %}
+            <div class="alert alert-success" style="margin-top: 20px;">
+                {{ success_message }}
+            </div>
+        {% endif %}
+    </div>
+
+<!-- Custom CSS -->
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;500&display=swap');
+
+    .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .booking-container {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .booking-form, .booking-summary {
+        flex: 1;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        min-width: 300px;
+    }
+
+    .booking-summary {
+        background-color: #f9f9f9;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+    }
+
+    h4, h5, h6, p {
+        margin-bottom: 15px;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    form label {
+        font-family: 'Roboto', sans-serif;
+        font-size: 14px;
+        text-transform: capitalize;
+        margin-bottom: 5px;
+    }
+
+    input, select, textarea {
+        margin-top: 5px;
+        padding: 8px;
+        font-family: 'Roboto', sans-serif;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+    }
+
+    @media (max-width: 768px) {
+        .booking-container {
+            flex-direction: column;
+            gap: 15px;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const ticketTypeField = document.querySelector('select[name="ticket_type"]');
+        const numberOfSeatsField = document.querySelector('input[name="number_of_seats"]');
+        const totalPriceElement = document.querySelector('#total-price');
+        const basePrice = {{ event.ticket_price }};  // Base ticket price from the event
+
+        function calculateTotalPrice() {
+            const ticketType = ticketTypeField.value;
+            const numberOfSeats = parseInt(numberOfSeatsField.value) || 0; // Default to 0 if no seats entered
+            let totalPrice = 0;
+
+            if (ticketType === 'starter') {
+                totalPrice = basePrice * numberOfSeats;
+            } else if (ticketType === 'standard') {
+                totalPrice = basePrice * 2 * numberOfSeats;
+            } else if (ticketType === 'platinum') {
+                totalPrice = basePrice * 3 * numberOfSeats;
+            }
+
+            // Update the total price on the page
+            totalPriceElement.textContent = totalPrice.toFixed(2);
+        }
+
+        // Event listeners to trigger total price calculation
+        ticketTypeField.addEventListener('change', calculateTotalPrice);
+        numberOfSeatsField.addEventListener('input', calculateTotalPrice);
+    });
+</script>
+</div>
+{% endblock %}

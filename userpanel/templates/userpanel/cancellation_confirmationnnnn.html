@@ -1,0 +1,22 @@
+{% extends 'userpanel/user_base.html' %}
+{% load static %}
+{% block title %}
+User | Blog List
+{% endblock %}
+
+{% block content %}
+
+
+<h2>Booking Cancellation Confirmation</h2>
+    <p>Dear {{ user.get_full_name }},</p>
+    <p>Your booking for the event "{{ booking.event.title }}" has been successfully canceled.</p>
+    <p>Booking Serial: {{ booking.booking_serial }}</p>
+    <p>Number of Seats: {{ booking.number_of_seats }}</p>
+    <p>Total Refund: ${{ booking.ticket_price }}</p>
+    <p>We hope to see you at future events.</p>
+    <p>Best regards,</p>
+    <p>The Evento Team</p>
+
+
+
+{% endblock %}

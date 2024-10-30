@@ -1,0 +1,63 @@
+{% extends 'adminpanel/admin_base.html' %}
+{% load static %}
+{% block title %}
+Activate Company
+{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Activate Company Manager</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{% url 'admin_dashboard' %}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'admin_messages' %}">Messages</a></li>
+                        <li class="breadcrumb-item active">Activate Company</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary card-outline">
+                    <div class="card-header">
+                        <h3 class="card-title">Company Manager Details</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <p><strong>Username:</strong> {{ company_manager.username }}</p>
+                        <p><strong>Email:</strong> {{ company_manager.email }}</p>
+                        <p><strong>Phone Number:</strong> {{ company_manager.company.phone_number }}</p>
+                        <p><strong>PAN Number:</strong> {{ company_manager.company.pan_number }}</p>
+                        <p><strong>GST Number:</strong> {{ company_manager.company.gst_number }}</p>
+                        <p><strong>Registration Date:</strong> {{ company_manager.date_joined|date:"N j, Y, P" }}</p>
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer">
+                        <form method="post" action="{% url 'activate_company' company_manager.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success">Confirm Activation</button>
+                            <a href="{% url 'admin_messages' %}" class="btn btn-secondary">Cancel</a>
+                        </form>
+                    </div>
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+
+
+{% endblock %}

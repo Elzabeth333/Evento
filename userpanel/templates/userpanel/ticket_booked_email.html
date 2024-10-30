@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket Booking Successful</title>
+</head>
+<body style="font-family: Arial, sans-serif;"></body>
+    <div style="max-width: 700px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 5px;">
+        <h2 style="color: #007bff;">Your Ticket for {{ event.title }} is Confirmed!</h2>
+        <p>Dear {{ user.first_name }},</p>
+        <p>Thank you for booking your ticket for <strong>{{ event.title }}</strong>. Below are your booking details:</p>
+
+        <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+                <th style="border-bottom: 1px solid #e0e0e0; padding: 8px; text-align: left;">Booking Serial:</th>
+                <td style="border-bottom: 1px solid #e0e0e0; padding: 8px;">{{ booking_serial }}</td>
+            </tr>
+            <tr>
+                <th style="border-bottom: 1px solid #e0e0e0; padding: 8px; text-align: left;">Event Name:</th>
+                <td style="border-bottom: 1px solid #e0e0e0; padding: 8px;">{{ event_title }}</td>
+            </tr>
+            <tr>
+                <th style="border-bottom: 1px solid #e0e0e0; padding: 8px; text-align: left;">Ticket Type:</th>
+                <td style="border-bottom: 1px solid #e0e0e0; padding: 8px;">{{ ticket_type }}</td>
+            </tr>
+            <tr>
+                <th style="border-bottom: 1px solid #e0e0e0; padding: 8px; text-align: left;">Number of Seats:</th>
+                <td style="border-bottom: 1px solid #e0e0e0; padding: 8px;">{{ number_of_seats }}</td>
+            </tr>
+            <tr>
+                <th style="border-bottom: 1px solid #e0e0e0; padding: 8px; text-align: left;">Total Price:</th>
+                <td style="border-bottom: 1px solid #e0e0e0; padding: 8px;">${{ total_price }}</td>
+            </tr>
+            <tr>
+                <th style="border-bottom: 1px solid #e0e0e0; padding: 8px; text-align: left;">Event Date:</th>
+                <td style="border-bottom: 1px solid #e0e0e0; padding: 8px;">{{ event_date }}</td>
+            </tr>
+        </table>
+
+        <p style="margin-top: 20px;">We look forward to seeing you at the event!</p>
+
+        <p style="margin-top: 20px;">Regards,<br><strong>Evento Team</strong></p>
+    </div>
+</body>
+</html>

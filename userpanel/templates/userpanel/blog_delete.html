@@ -1,0 +1,25 @@
+{% extends 'userpanel/user_base.html' %}
+
+{% block title %}
+Delete Blog - {{ blog.title }}
+{% endblock %}
+
+{% block content %}
+<section class="section about">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+                <div class="section-title text-center">
+                    <h2>Delete <span class="alternate">{{ blog.title }}</span></h2>
+                    <p>Are you sure you want to delete this blog?</p>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger" style="color: white;">Yes, Delete</button>
+                        <a href="{% url 'blog_detail' blog.id %}" class="btn btn-secondary">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

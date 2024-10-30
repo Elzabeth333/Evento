@@ -1,0 +1,88 @@
+{% extends 'adminpanel/admin_base.html' %}
+{% load static %}
+{% block title %}
+Admin | Manager Details
+{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Manager Details</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'manager_list' %}">Manager List</a></li>
+            <li class="breadcrumb-item active">Manager Details</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-primary card-outline">
+          <div class="card-header">
+            <h3 class="card-title">{{ manager.username }}'s Profile</h3>
+          </div>
+          <div class="card-body" style="height: 400px;">
+            <!-- Row for All Sections -->
+            <div class="row">
+              <!-- Profile Image Section -->
+              <div class="col-md-3">
+                <div class="text-center">
+                  <h5 style="margin-top: 50px;"><strong>Profile Image</strong></h5>
+                  {% if company_manager.profile_image %}
+                    <img src="{{ company_manager.profile_image.url }}" alt="{{ manager.username }}'s Profile Image" class="img-fluid rounded shadow-sm" style="width: 150px;">
+                  {% else %}
+                    <p>No profile image available.</p>
+                  {% endif %}
+                </div>
+              </div>
+
+              <!-- Contact Information Section -->
+              <div class="col-md-3">
+                <h5 style="margin-top: 50px;"><strong>Contact Information</strong></h5>
+                <p><strong>Username:</strong>&nbsp; {{ manager.username }}</p>
+                <p><strong>Email:</strong>&nbsp; {{ manager.email }}</p>
+                <p><strong>Phone Number:</strong>&nbsp; {{ company_manager.phone_number }}</p>
+              </div>
+
+              <!-- ID Proof Image Section -->
+              <div class="col-md-3">
+                <div class="text-center">
+                  <h5 style="margin-top: 50px;"><strong>ID Proof Image</strong></h5>
+                  {% if company_manager.id_proof_image %}
+                    <img src="{{ company_manager.id_proof_image.url }}" alt="ID Proof Image" class="img-fluid rounded shadow-sm" style="width: 150px;">
+                  {% else %}
+                    <p>No ID proof image available.</p>
+                  {% endif %}
+                </div>
+              </div>
+
+              <!-- Company Information Section -->
+              <div class="col-md-3">
+                <h5 style="margin-top: 50px;"><strong>Company Information</strong></h5>
+                <p style="margin-top: 20px;"><strong>ID Proof:</strong>&nbsp; {{ company_manager.id_proof }}</p>
+                <p><strong>PAN Number:</strong>&nbsp; {{ company_manager.pan_number }}</p>
+                <p><strong>GST Number:</strong>&nbsp; {{ company_manager.gst_number }}</p>
+                <p><strong>Status:</strong> &nbsp;{{ manager.is_active|yesno:"Active ,Not Active " }}</p>
+                <p><strong>Created At:</strong>&nbsp; {{ company_manager.created_at|date:"N j, Y, P" }}</p>
+                <p><strong>Updated At:</strong>&nbsp; {{ company_manager.updated_at|date:"N j, Y, P" }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer text-right">
+            <a href="{% url 'manager_list' %}" class="btn btn-secondary">Back to Manager List</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %}

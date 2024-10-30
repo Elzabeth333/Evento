@@ -1,0 +1,16 @@
+{% extends 'companypanel/company_base.html' %}
+{% block title %}Request OTP{% endblock %}
+
+{% block content %}
+
+
+<div class="container" style="margin-left: 500px;margin-top: 200px;">
+    <h2>Forgot Password?</h2>
+    <p>Enter your username to request a password reset OTP.</p>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Send OTP</button>
+    </form>
+</div>
+{% endblock %}

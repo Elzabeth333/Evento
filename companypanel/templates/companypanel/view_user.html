@@ -1,0 +1,81 @@
+{% extends 'companypanel/company_base.html' %}
+{% load static %}
+
+{% block title %}
+Company | View User
+{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 600px; margin: 100px auto;">
+    <h1 class="text-center">{{ user.username }}'s Details</h1>
+
+    <div class="text-center mb-4">
+        {% if attendee.profile_image %}
+            <img src="{{attendee.profile_image.url }}" alt="Profile Image" style="width: 300px; height: 300px;">
+            {% endif %}
+    </div>
+
+    <table class="table table-striped">
+        <tr>
+            <th>Username:</th>
+            <td>{{ user.username }}</td>
+        </tr>
+        <tr>
+            <th>Email:</th>
+            <td>{{ user.email }}</td>
+        </tr>
+        {% if attendee %}
+        <tr>
+            <th>Phone Number:</th>
+            <td>{{ attendee.phone_number }}</td>
+        </tr>
+        <tr>
+            <th>ID Proof:</th>
+            <td>{{ attendee.id_proof }}</td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="2">Attendee profile information not available.</td>
+        </tr>
+        {% endif %}
+        <tr>
+            <th>Date Joined:</th>
+            <td>{{ user.date_joined|date:"Y-m-d H:i" }}</td>
+        </tr>
+    </table>
+
+
+    <!-- Ticket Booking Details Section -->
+    <h2 class="text-center mt-5">Ticket Bookings</h2>
+    {% if bookings %}
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Event</th>
+                <th>Ticket Type</th>
+                <th>Number of Seats</th>
+                <th>Booking Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.event.title }}</td>
+                <td>{{ booking.ticket_type }}</td>
+                <td>{{ booking.number_of_seats }}</td>
+                <td>{{ booking.booking_date|date:"Y-m-d H:i" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="text-center">No bookings found for this user.</p>
+    {% endif %}
+
+    <div class="text-center mt-4">
+        <a href="{% url 'user_list' %}" class="btn btn-secondary">Back to User List</a>
+    </div>
+</div>
+
+   
+{% endblock %}

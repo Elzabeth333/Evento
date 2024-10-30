@@ -1,0 +1,15 @@
+
+
+
+users  - shobhana
+
+
+manager - david , mariya , chelsa_anna , stephan - Mypassword@123
+
+admin - Elzabeth , Jithin ,  philo , derick , paul
+
+
+Elzabeth - Mypassword@1234
+
+
+celery -A Evento  worker --pool=solo -l info

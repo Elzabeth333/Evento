@@ -1,0 +1,132 @@
+{% extends 'adminpanel/admin_base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}
+Admin | Deleted Messages
+{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Deleted Messages</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Home</a></li>
+                        <li class="breadcrumb-item active">Deleted Messages</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content">
+        <div class="row">
+            <div class="col-md-3">
+                <a href="{% url 'admin_compose' %}" class="btn btn-primary btn-block mb-3">Compose</a>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Folders</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <ul class="nav nav-pills flex-column">
+                            <li class="nav-item">
+                                <a href="{% url 'admin_mailbox' %}" class="nav-link">
+                                    <i class="fas fa-inbox"></i> Inbox
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{% url 'admin_sent_items' %}" class="nav-link">
+                                    <i class="far fa-envelope"></i> Sent
+                                </a>
+                            </li>
+                            
+                            <li class="nav-item active">
+                                <a href="{% url 'admin_deleted_messages' %}" class="nav-link">
+                                    <i class="far fa-trash-alt"></i> Trash
+                                    <span class="badge bg-primary float-right">{{ deleted_messages.count }}</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="card card-primary card-outline">
+                    <div class="card-header">
+                        <h3 class="card-title">Deleted Messages</h3>
+                        <div class="card-tools">
+                            
+                            
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive mailbox-messages">
+                            <table class="table table-hover table-striped">
+                                <tbody>
+                                    {% for message in deleted_messages %}
+                                    <tr>
+                                        <td class="mailbox-name">{{ message.receiver.username }}</td>
+                                        <td class="mailbox-subject"><b>{{ message.subject }}</b> - {{ message.body|truncatewords:10 }}</td>
+                                        <td class="mailbox-date">{{ message.deleted_at|naturaltime }}</td>
+                                        <td>
+                                            <a href="{% url 'admin_message_detail' message.id %}" class="btn btn-sm btn-primary">View</a>
+                                        </td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr>
+                                        <td colspan="4">No deleted messages found.</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer p-0">
+                        <div class="mailbox-controls">
+                            <button type="button" class="btn btn-default btn-sm checkbox-toggle">
+                                <i class="far fa-square"></i>
+                            </button>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-sm">
+                                    <i class="far fa-trash-alt"></i>
+                                </button>
+                                <button type="button" class="btn btn-default btn-sm">
+                                    <i class="fas fa-reply"></i>
+                                </button>
+                                <button type="button" class="btn btn-default btn-sm">
+                                    <i class="fas fa-share"></i>
+                                </button>
+                            </div>
+                            <button type="button" class="btn btn-default btn-sm">
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
+                            <div class="float-right">
+                                1-50/200
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-sm">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-default btn-sm">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

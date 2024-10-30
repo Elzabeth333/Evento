@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Evento</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{% static 'login/plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- icheck bootstrap -->
+  <link rel="stylesheet" href="{% static 'login/plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'login/dist/css/adminlte.min.css' %}">
+</head>
+
+<body class="hold-transition register-page">
+  <div class="register-box">
+    <div class="register-logo">
+      <ul style="display: flex; list-style-type: none; padding: 0;" class="navbar-brand">
+        <div class="col-xl-2 col-lg-2 col-md-1">
+          <div class="logo">
+            <a href="index.html"><img src="{% static 'sitevisitor/img/logo/logo.png' %}" alt=""
+                style="margin-top: 20px; margin-left: 70px;"></a>
+          </div>
+        </div>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-body register-card-body">
+        <p class="login-box-msg" style="color: rgb(37, 37, 165);">Register a new membership</p>
+        {% if messages %}
+        <ul class="messages">
+          {% for message in messages %}
+          <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form.as_p }}
+          {{ form1.as_p }}
+          <input type="submit" value="Register" class="btn btn-primary btn-lg" style="width: 310px; height: 50px;">
+          <a href="{% url 'attendee_login' %}"> back to login</a>
+        </form>
+      </div>
+      <!-- /.form-box -->
+    </div><!-- /.card -->
+  </div>
+  <!-- /.register-box -->
+
+  {% if messages %}
+  {% for message in messages %}
+  <script>
+    alert('{{ message }}')
+  </script>
+  {% endfor %}
+  {% endif %}
+
+  
+
+  <!-- jQuery -->
+  <script src="{% static 'login/plugins/jquery/jquery.min.js' %}"></script>
+  <!-- Bootstrap 4 -->
+  <script src="{% static 'login/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <!-- AdminLTE App -->
+  <script src="{% static 'login/dist/js/adminlte.min.js' %}"></script>
+</body>
+
+</html>
